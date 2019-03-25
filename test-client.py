@@ -1,50 +1,59 @@
-
-from socket import socket
+import socket
 from threading import Thread
 from zlib import compress
-
 from mss import mss
 
 
-WIDTH = 1900
-HEIGHT = 1000
+def connection(client_conn):
+    while 'recording':
+        pixels = retrieve_screen_shot()
+
+        pixel_length = len(pixels)
+        size_len = (pixel_length.bit_length() + 7) // 8
+
+        # Send the size of the pixels length
+        try:
+            client_conn.send(bytes([size_len]))
+        except ConnectionResetError:
+            print("Connection Terminated")
+            break
+
+        # Send the actual pixels length
+        size_bytes = pixel_length.to_bytes(size_len, 'big')
+        try:
+            client_conn.send(size_bytes)
+        except ConnectionResetError:
+            print("connection Terminated")
+        
+
+        # Send pixels
+        try:
+            client_conn.sendall(pixels)
+        except ConnectionResetError:
+            print("connection Terminated")
+            break
 
 
-def retreive_screenshot(conn):
-    with mss() as sct:
-        # The region to capture
-        rect = {'top': 0, 'left': 0, 'width': WIDTH, 'height': HEIGHT}
-
-        while 'recording':
-            # Capture the screen
-            img = sct.grab(rect)
-            # Tweak the compression level here (0-9)
-            pixels = compress(img.rgb, 6)
-
-            # Send the size of the pixels length
-            size = len(pixels)
-            size_len = (size.bit_length() + 7) // 8
-            conn.send(bytes([size_len]))
-
-            # Send the actual pixels length
-            size_bytes = size.to_bytes(size_len, 'big')
-            conn.send(size_bytes)
-
-            # Send pixels
-            conn.sendall(pixels)
+def retrieve_screen_shot():
+    sct = mss()
+    rect = {'top': 0, 'left': 0, 'width': 1920, 'height': 1080}
+    img = sct.grab(rect)
+    return compress(img.rgb, 6)
 
 
-def main(host='192.168.0.197', port=5000):
-    sock = socket()
+def main():
+    host = '127.0.0.1'
+    port = 5000
+    sock = socket.socket()
     sock.bind((host, port))
     try:
         sock.listen(5)
         print('Server started.')
 
         while 'connected':
-            conn, addr = sock.accept()
-            print('Client connected IP:', addr)
-            thread = Thread(target=retreive_screenshot, args=(conn,))
+            client_conn, client_addr = sock.accept()
+            print('Client connected IP:', client_addr)
+            thread = Thread(target=connection, args=(client_conn,))
             thread.start()
     finally:
         sock.close()
@@ -52,3 +61,5 @@ def main(host='192.168.0.197', port=5000):
 
 if __name__ == '__main__':
     main()
+
+
