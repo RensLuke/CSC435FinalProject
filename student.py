@@ -1,11 +1,10 @@
-
 from socket import socket
 from zlib import decompress
-
+from SocketBuilder import SocketObj
 import pygame
 
-WIDTH = 1900
-HEIGHT = 1000
+WIDTH = 1920
+HEIGHT = 1080
 
 
 def recvall(conn, length):
@@ -20,14 +19,13 @@ def recvall(conn, length):
     return buf
 
 
-def main(host='192.168.0.197', port=5000):
+def main():
+    new_socket = SocketObj('127.0.0.1', 5000, 'client')
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     clock = pygame.time.Clock()
     watching = True
-
-    sock = socket()
-    sock.connect((host, port))
+    new_socket.sock.connect((new_socket.host, new_socket.port))
     try:
         while watching:
             for event in pygame.event.get():
@@ -35,11 +33,12 @@ def main(host='192.168.0.197', port=5000):
                     watching = False
                     break
 
-            # Retreive the size of the pixels length, the pixels length and pixels
-            size_len = int.from_bytes(sock.recv(1), byteorder='big')
-            size = int.from_bytes(sock.recv(size_len), byteorder='big')
-            pixels = decompress(recvall(sock, size))
-
+            # Retrieve the size of the pixels length
+            size_len = int.from_bytes(new_socket.sock.recv(1), byteorder='big')
+            # Retrieve the pixels length
+            PixelLength = int.from_bytes(new_socket.sock.recv(size_len), byteorder='big')
+            # Retrieve the pixels
+            pixels = decompress(recvall(new_socket.sock, PixelLength))
             # Create the Surface from raw pixels
             img = pygame.image.fromstring(pixels, (WIDTH, HEIGHT), 'RGB')
 
@@ -48,7 +47,7 @@ def main(host='192.168.0.197', port=5000):
             pygame.display.flip()
             clock.tick(60)
     finally:
-        sock.close()
+        new_socket.sock.close()
 
 
 if __name__ == '__main__':
