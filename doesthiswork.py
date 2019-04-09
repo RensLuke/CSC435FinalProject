@@ -16,13 +16,14 @@ data, addr = serverSock.recvfrom(32)
 i = 0
 chunk = b''
 num = data.decode('utf-8')
-print(num)
+print(num, '\n')
 while True:
     print(i)
     i += 1
     data1, addr1 = serverSock.recvfrom(64000)
     chunk = chunk + data1
-    if i == int(num):
+    if i == int(num)-1:
+        print("did it get here")
         break
 
 with open('test.txt', 'rb') as filereader:
