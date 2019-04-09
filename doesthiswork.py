@@ -9,10 +9,9 @@ WIDTH = 1920
 HEIGHT = 1080
 
 serverSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
 serverSock.bind((UDP_IP_ADDRESS, UDP_PORT_NO))
+
 while True:
-    print("Connected and ready")
     try:
         data, addr = serverSock.recvfrom(32)
     except OSError:
@@ -30,6 +29,8 @@ while True:
 
         if chunk == OGchunk:
             print("They are the same")
+        else:
+            print("They are not the same")
 
     '''
     pygame.init()
