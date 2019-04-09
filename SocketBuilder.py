@@ -22,14 +22,18 @@ class SocketObj:
         """ Retreive all pixels. """
 
         buf = b''
+        print("dicks")
         while len(buf) < length:
             data = conn.recv(length - len(buf))
+            print(length - len(buf))
             if not data:
                 return
             buf += data
+        print("returning")
         return buf
 
     def client_connection(self, WIDTH, HEIGHT):
+        print("dicks")
         self.is_not_used()
         while True:
             try:
@@ -57,6 +61,7 @@ class SocketObj:
                 # Retrieve the pixels length
                 PixelLength = int.from_bytes(self.sock.recv(size_len), byteorder='big')
                 # Retrieve the pixels
+                print("calling recvall")
                 pixels = decompress(self.recvall(self.sock, PixelLength))
                 # Create the Surface from raw pixels
                 img = pygame.image.fromstring(pixels, (WIDTH, HEIGHT), 'RGB')
