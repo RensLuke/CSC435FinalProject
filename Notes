@@ -6,3 +6,6 @@
     rule out zlib
     
     remove socket and test just displaying the ss 
+
+    try compressing each piece (gets most of the frame)
+    
