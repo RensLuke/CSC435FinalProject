@@ -1,0 +1,11 @@
+ Possible Fixes
+    Multiple sockets/ modify system settings
+    try without compression
+    
+    test realistic = across actual medium (network)
+    rule out zlib
+    
+    remove socket and test just displaying the ss 
+
+    try compressing each piece (gets most of the frame)
+    
