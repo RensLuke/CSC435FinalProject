@@ -8,4 +8,7 @@
     remove socket and test just displaying the ss 
 
     try compressing each piece (gets most of the frame)
+    lossy has better compression rate - like jpeg - maybe from pil 
+    zlib is lossless
+    take a screenshot and compare the sizes
     
