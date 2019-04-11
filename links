@@ -7,3 +7,8 @@ https://twistedmatrix.com/pipermail/twisted-python/2006-July/013729.html
 Decompress Error = 173
 Bad Receive Error = 172
 Successes = 97
+
+30 sec run 4/11/2019 - James Laptop
+Decompress Error = 18
+Bad Receive Error = 0
+Successes = 241
