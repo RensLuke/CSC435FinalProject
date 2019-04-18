@@ -15,7 +15,7 @@ decompressCounter = 0
 badreceiveCounter = 0
 successCounter = 0
 
-'''
+
 def packet_buffer():
     global buffer_counter
     p = 0
@@ -33,8 +33,7 @@ def packet_buffer():
             buffer.append(chunk)
             buffer_counter += 1
             print(buffer_counter)
-            pygame.event.get()
-'''
+
 
 serverSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 serverSock.bind((UDP_IP_ADDRESS, UDP_PORT_NO))
@@ -55,20 +54,10 @@ while True:
                     break
             
             else:
+                buff = threading.Thread(target=packet_buffer())
+                buff.start()
                 try:
-                    data, addr = serverSock.recvfrom(32)
-                    num = data.decode('utf-8')
-                except OSError:
-                    print('bad receive')
-                else:
-                    chunk = b''
-                    for j in range(int(num)):
-                        data, addr = serverSock.recvfrom(64000)
-                        chunk = chunk + data
-                # buff = threading.Thread(target=packet_buffer())
-                # buff.start()
-                try:
-                    pixels = zlib.decompress(chunk)
+                    pixels = zlib.decompress(buffer[co])
                     # Create the Surface from raw pixels
                     img = pygame.image.fromstring(pixels, (WIDTH, HEIGHT), 'RGB')
                     # Display the picture
