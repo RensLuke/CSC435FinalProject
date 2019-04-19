@@ -8,9 +8,8 @@ import threading
 UDP_IP_ADDRESS = '239.1.1.1'
 UDP_PORT_NO = 6789
 server_address = ('', UDP_PORT_NO)
-WIDTH = 1980
+WIDTH = 1920
 HEIGHT = 1080
-buffer = []
 OSErrorCount = 0
 CompressionErrorCount = 0
 pygameErrorCount = 0
@@ -25,11 +24,10 @@ serverSock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 print("Starting")
 pygame.init()
 pygame.display.set_caption('Rolt VNC')
-screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
+screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
 clock = pygame.time.Clock()
 watching = True
 
-co = 0
 while True:
         while watching:
             for event in pygame.event.get():
@@ -52,6 +50,7 @@ while True:
                     try:
                         zobj = zlib.decompressobj()
                         pixels = zobj.decompress(chunk)
+                        print(len(pixels))
                     except zlib.error:
                         print("Compression Error")
                         CompressionErrorCount += 1
@@ -59,7 +58,6 @@ while True:
                         # Create the Surface from raw pixels
                         try:
                             img = pygame.image.fromstring(pixels, (WIDTH, HEIGHT), 'RGB')
-                            img = pygame.transform.scale(img, (1280, 720))
                         except ValueError:
                             print("pygame error")
                             pygameErrorCount += 1
