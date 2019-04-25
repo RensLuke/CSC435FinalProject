@@ -2,3 +2,7 @@ Convert to executable:
 pyinstaller --onefile <your_script_name>.py
 
 requires screenshot and gui .py to be in same folder to build, check on this later
+
+
+maybe
+  add a sequence number to see if that will help it now be out of order
