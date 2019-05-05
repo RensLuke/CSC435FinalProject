@@ -5,6 +5,14 @@ from screenshot import ScreenShotObj
 import pygame
 import threading
 
+
+def get_sfa_ip():
+    ipList = socket.gethostbyname_ex(socket.gethostname())[2]
+    for x in range(len(ipList)):
+        if '144.96' in ipList[x]:
+            return ipList[x]
+
+
 UDP_IP_ADDRESS = '239.1.1.1'
 UDP_PORT_NO = 6789
 server_address = ('', UDP_PORT_NO)
@@ -15,13 +23,15 @@ CompressionErrorCount = 0
 pygameErrorCount = 0
 successCounter = 0
 
+my_ip = get_sfa_ip()
+# my_ip = '192.168.0.14'  # For testing
 
 serverSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 serverSock.bind(server_address)
 group = socket.inet_aton(UDP_IP_ADDRESS)
-mreq = struct.pack('4s4s', group, socket.inet_aton('192.168.86.35'))
+mreq = struct.pack('4s4s', group, socket.inet_aton(my_ip))
 serverSock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
-print("Starting")
+print("Starting on IP:", my_ip)
 pygame.init()
 pygame.display.set_caption('Rolt VNC')
 screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
@@ -50,7 +60,6 @@ while True:
                     try:
                         zobj = zlib.decompressobj()
                         pixels = zobj.decompress(chunk)
-                        print(len(pixels))
                     except zlib.error:
                         print("Compression Error")
                         CompressionErrorCount += 1
