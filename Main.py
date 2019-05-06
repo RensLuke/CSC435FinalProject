@@ -9,6 +9,7 @@ import helper
 ip = 'temp'
 multicast = 'temp'
 resolution = 'temp'
+saved = False
 
 
 class StartSettings(Ui_dlgSettings):
@@ -27,10 +28,11 @@ class StartSettings(Ui_dlgSettings):
         print('settings opened')
 
     def save_settings(self):
-        global ip, multicast, resolution
+        global ip, multicast, resolution, saved
         ip = self.txtIP.text().strip()
         multicast = self.cmbMulticast.currentText()
         resolution = self.cmbResolution.currentText()
+        saved = True
         print('settings saved')
 
     def cancel(self):
@@ -54,7 +56,7 @@ class StartUp(Ui_dlgMain):
     def start(self):
         # Start Client/Server respectively
         print('Starting')
-        client.run_me(ip, multicast, resolution)
+        client.run_me(ip, multicast, resolution, saved)
 
     def exit(self):
         print('Exiting')
