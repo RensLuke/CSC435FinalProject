@@ -32,8 +32,12 @@ group = socket.inet_aton(UDP_IP_ADDRESS)
 mreq = struct.pack('4s4s', group, socket.inet_aton(my_ip))
 serverSock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 print("Starting on IP:", my_ip)
+
+# Set up Pygame stuff
 pygame.init()
-pygame.display.set_caption('Rolt VNC')
+pygame.display.set_caption('Jack Cast')
+icon = pygame.image.load('GUI/jack_cast_icon.png')
+pygame.display.set_icon(icon)
 screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
 clock = pygame.time.Clock()
 watching = True
