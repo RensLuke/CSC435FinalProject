@@ -13,7 +13,7 @@ class Ui_dlgMain(object):
         dlgMain.setObjectName("dlgMain")
         dlgMain.resize(400, 300)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("jack_cast_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("GUI/jack_cast_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         dlgMain.setWindowIcon(icon)
         self.btnStart = QtWidgets.QPushButton(dlgMain)
         self.btnStart.setGeometry(QtCore.QRect(120, 70, 171, 41))
