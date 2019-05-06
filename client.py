@@ -51,13 +51,20 @@ def start():
     screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
     clock = pygame.time.Clock()
     watching = True
-
+    WIDTH2 = WIDTH
+    HEIGHT2 = HEIGHT
+    
+    
     while True:
             while watching:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         watching = False
                         break
+                    elif event.type == pygame.VIDEORESIZE:
+                        screen = pygame.display.set_mode(event.dict['size'], pygame.RESIZABLE)
+                        WIDTH2 = event.dict['size'][0]
+                        HEIGHT2 = event.dict['size'][1]
                 else:
                     try:
                         data, addr = serverSock.recvfrom(32)
@@ -86,7 +93,7 @@ def start():
                                 pygameErrorCount += 1
                             else:
                                 # Display the picture
-                                screen.blit(img, (0, 0))
+                                screen.blit(pygame.transform.smoothscale(img, (WIDTH2, HEIGHT2)), (0, 0))
                                 pygame.display.flip()
                                 clock.tick(60)
                                 successCounter += 1
