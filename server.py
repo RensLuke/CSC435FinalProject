@@ -1,6 +1,6 @@
 import socket
 import math
-from screenshot import ScreenShotObj
+import helper
 
 
 def get_sfa_ip():
@@ -18,7 +18,7 @@ my_ip = get_sfa_ip()
 # my_ip = '192.168.0.14'  # For testing
 
 while True:
-    SS = ScreenShotObj()
+    SS = helper.ScreenShotObj()
     chunk = SS.takescreenshot()
     # print(len(chunk))
     clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)

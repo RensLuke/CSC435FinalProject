@@ -1,5 +1,6 @@
 from zlib import compress
 import mss
+import socket
 
 
 class ScreenShotObj:
@@ -15,4 +16,15 @@ class ScreenShotObj:
 
     def is_not_used(self):
         pass
+
+
+class NetworkingObj:
+    def __init__(self):
+        pass
+
+    def get_sfa_ip(self):
+        ipList = socket.gethostbyname_ex(socket.gethostname())[2]
+        for x in range(len(ipList)):
+            if '144.96' in ipList[x]:
+                return ipList[x]
 
