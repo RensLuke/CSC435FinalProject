@@ -45,3 +45,13 @@ class Ui_dlgMain(object):
         self.btnExit.setText(_translate("dlgMain", "Exit"))
         self.label.setText(_translate("dlgMain", "Jack Cast"))
 
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    dlgMain = QtWidgets.QDialog()
+    ui = Ui_dlgMain()
+    ui.setupUi(dlgMain)
+    dlgMain.show()
+    sys.exit(app.exec_())
+

@@ -16,7 +16,7 @@ class Ui_dlgSettings(object):
         font.setPointSize(9)
         dlgSettings.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("jack_cast_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("GUI/jack_cast_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         dlgSettings.setWindowIcon(icon)
         self.buttonBox = QtWidgets.QDialogButtonBox(dlgSettings)
         self.buttonBox.setGeometry(QtCore.QRect(0, 250, 341, 32))
