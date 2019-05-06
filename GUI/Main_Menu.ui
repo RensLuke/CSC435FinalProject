@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Rolt</string>
+   <string>Jack Cast</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>jack_cast_icon.png</normaloff>jack_cast_icon.png</iconset>
   </property>
   <widget class="QPushButton" name="btnStart">
    <property name="geometry">
@@ -70,7 +74,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Rolt VNC</string>
+    <string>Jack Cast</string>
    </property>
   </widget>
  </widget>

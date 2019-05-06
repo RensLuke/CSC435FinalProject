@@ -16,7 +16,11 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Rolt</string>
+   <string>Jack Cast</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>jack_cast_icon.png</normaloff>jack_cast_icon.png</iconset>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">

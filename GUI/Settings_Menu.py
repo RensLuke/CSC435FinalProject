@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Rolt_Settings.ui'
+# Form implementation generated from reading ui file 'Settings_Menu.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -15,6 +15,9 @@ class Ui_dlgSettings(object):
         font = QtGui.QFont()
         font.setPointSize(9)
         dlgSettings.setFont(font)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("jack_cast_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        dlgSettings.setWindowIcon(icon)
         self.buttonBox = QtWidgets.QDialogButtonBox(dlgSettings)
         self.buttonBox.setGeometry(QtCore.QRect(0, 250, 341, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
@@ -100,7 +103,7 @@ class Ui_dlgSettings(object):
 
     def retranslateUi(self, dlgSettings):
         _translate = QtCore.QCoreApplication.translate
-        dlgSettings.setWindowTitle(_translate("dlgSettings", "Rolt"))
+        dlgSettings.setWindowTitle(_translate("dlgSettings", "Jack Cast"))
         self.lblSettings.setText(_translate("dlgSettings", "Settings"))
         self.lblIP.setText(_translate("dlgSettings", "IP Address:"))
         self.txtIP.setText(_translate("dlgSettings", "127.0.0.1"))

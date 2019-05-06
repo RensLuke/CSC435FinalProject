@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Rolt_Main.ui'
+# Form implementation generated from reading ui file 'Main_Menu.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -12,6 +12,9 @@ class Ui_dlgMain(object):
     def setupUi(self, dlgMain):
         dlgMain.setObjectName("dlgMain")
         dlgMain.resize(400, 300)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("jack_cast_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        dlgMain.setWindowIcon(icon)
         self.btnStart = QtWidgets.QPushButton(dlgMain)
         self.btnStart.setGeometry(QtCore.QRect(120, 70, 171, 41))
         self.btnStart.setObjectName("btnStart")
@@ -36,9 +39,9 @@ class Ui_dlgMain(object):
 
     def retranslateUi(self, dlgMain):
         _translate = QtCore.QCoreApplication.translate
-        dlgMain.setWindowTitle(_translate("dlgMain", "Rolt"))
+        dlgMain.setWindowTitle(_translate("dlgMain", "Jack Cast"))
         self.btnStart.setText(_translate("dlgMain", "Start"))
         self.btnSettings.setText(_translate("dlgMain", "Settings"))
         self.btnExit.setText(_translate("dlgMain", "Exit"))
-        self.label.setText(_translate("dlgMain", "Rolt VNC"))
+        self.label.setText(_translate("dlgMain", "Jack Cast"))
 
