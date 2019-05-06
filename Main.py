@@ -1,7 +1,10 @@
 from Main_Menu import Ui_dlgMain
 from Settings_Menu import Ui_dlgSettings
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtWidgets
 import sys
+import client
+import helper
+
 
 ip = 'temp'
 multicast = 'temp'
@@ -16,9 +19,11 @@ class StartSettings(Ui_dlgSettings):
         self.init_ui()
 
     def init_ui(self):
-        self.txtIP.setText('127.0.0.1')  # TODO: change this to be the SFA IP set
-        # self.buttonBox.accepted.connect(self.save_settings())
-        # self.buttonBox.rejected.connect(self.cancel())
+        # Initialize settings menu
+        network = helper.NetworkingObj()
+        self.txtIP.setText(network.get_sfa_ip())  # TODO: change this to be the SFA IP set
+        self.buttonBox.accepted.connect(lambda: self.save_settings())
+        self.buttonBox.rejected.connect(lambda: self.cancel())
         print('settings opened')
 
     def save_settings(self):
@@ -40,14 +45,16 @@ class StartUp(Ui_dlgMain):
         self.init_ui()
 
     def init_ui(self):
-        # self.btnStart.clicked.connect(self.start())
-        # self.btnExit.clicked.connect(self.exit())
-        # self.btnSettings.clicked.connect(self.settings())
+        # Initialize main menu
+        self.btnStart.clicked.connect(lambda: self.start())
+        self.btnExit.clicked.connect(lambda: self.exit())
+        self.btnSettings.clicked.connect(lambda: self.settings())
         print('main menu')
 
     def start(self):
+        # Start Client/Server respectively
         print('Starting')
-        # TODO: Put the client/server code here in each file
+        client.run_me(ip, multicast, resolution)
 
     def exit(self):
         print('Exiting')
@@ -55,12 +62,10 @@ class StartUp(Ui_dlgMain):
 
     def settings(self):
         # Opens the settings dialog
-        app2 = QtWidgets.QApplication(sys.argv)
-        dialog2 = QtWidgets.QDialog()
-        prog2 = StartSettings(dialog2)
-
-        dialog2.show()
-        sys.exit(app2.exec_())
+        global prog2
+        self.dialog2 = QtWidgets.QDialog()
+        prog2 = StartSettings(self.dialog2)
+        self.dialog2.show()
 
 
 if __name__ == '__main__':
