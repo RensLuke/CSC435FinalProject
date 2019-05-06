@@ -12,11 +12,12 @@ multicast_addr = '239.1.1.1'
 resolution = '1920 x 1080'
 
 
-def run_me(pIP, pMulti, pRes):
+def run_me(pIP, pMulti, pRes, pSaved):
     global ip_addr, multicast_addr, resolution
-    ip_addr = pIP
-    multicast_addr = pMulti
-    resolution = pRes
+    if pSaved:
+        ip_addr = pIP
+        multicast_addr = pMulti
+        resolution = pRes
     start()
 
 
