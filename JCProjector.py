@@ -1,6 +1,6 @@
 from Main_Menu import Ui_dlgMain
 from Settings_Menu import Ui_dlgSettings
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 import sys
 import server
 import helper
@@ -48,6 +48,8 @@ class StartUp(Ui_dlgMain):
 
     def init_ui(self):
         # Initialize main menu
+        self.label.setGeometry(QtCore.QRect(10, 10, 300, 41))
+        self.label.setText('Jack Cast Projector')
         self.btnStart.clicked.connect(lambda: self.start())
         self.btnExit.clicked.connect(lambda: self.exit())
         self.btnSettings.clicked.connect(lambda: self.settings())
