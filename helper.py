@@ -7,10 +7,10 @@ class ScreenShotObj:
     def __init__(self):
         pass
 
-    def takescreenshot(self):
+    def takescreenshot(self, pWidth, pHeight):
         self.is_not_used()
         with mss.mss() as sct:
-            rect = {'top': 0, 'left': 0, 'width': 1920, 'height': 1080}
+            rect = {'top': 0, 'left': 0, 'width': pWidth, 'height': pHeight}
             img = sct.grab(rect)
             return compress(img.rgb, 7)
 

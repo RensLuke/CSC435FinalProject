@@ -2,7 +2,7 @@ import socket
 import math
 import helper
 
-# ip_addr = '192.168.0.14'  # For testing
+# Set defaults
 network = helper.NetworkingObj()
 ip_addr = network.get_sfa_ip()
 multicast_addr = '239.1.1.1'
@@ -19,14 +19,19 @@ def run_me(pIP, pMulti, pRes, pSaved):
 
 
 def start():
+    global ip_addr, multicast_addr, resolution
+
     UDP_IP_ADDRESS = multicast_addr
     UDP_PORT_NO = 6789
     segment_size = 64000
     sent = 0
+    resolution = resolution.split()
+    width = int(resolution[0])
+    height = int(resolution[2])
 
     while True:
         SS = helper.ScreenShotObj()
-        chunk = SS.takescreenshot()
+        chunk = SS.takescreenshot(width, height)
         # print(len(chunk))
         clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
         clientSock.setsockopt(socket.SOL_IP, socket.IP_MULTICAST_IF, socket.inet_aton(ip_addr))
