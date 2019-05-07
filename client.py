@@ -46,7 +46,7 @@ def start():
     # Set up Pygame stuff
     pygame.init()
     pygame.display.set_caption('Jack Cast')
-    icon = pygame.image.load('GUI/jack_cast_icon.png')
+    icon = pygame.image.load('GUI/Icons/jack_cast_icon.png')
     pygame.display.set_icon(icon)
     screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
     clock = pygame.time.Clock()

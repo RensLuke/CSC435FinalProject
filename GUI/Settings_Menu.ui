@@ -19,8 +19,8 @@
    <string>Jack Cast</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>jack_cast_icon.png</normaloff>jack_cast_icon.png</iconset>
+   <iconset resource="icons.qrc">
+    <normaloff>:/icons/jack_cast_icon.png</normaloff>:/icons/jack_cast_icon.png</iconset>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
@@ -209,6 +209,11 @@
     </item>
     <item>
      <property name="text">
+      <string>1600 x 900</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
       <string>1366 x 768</string>
      </property>
     </item>
@@ -220,7 +225,9 @@
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

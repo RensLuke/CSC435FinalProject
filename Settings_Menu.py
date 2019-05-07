@@ -16,7 +16,7 @@ class Ui_dlgSettings(object):
         font.setPointSize(9)
         dlgSettings.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("GUI/jack_cast_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icons/jack_cast_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         dlgSettings.setWindowIcon(icon)
         self.buttonBox = QtWidgets.QDialogButtonBox(dlgSettings)
         self.buttonBox.setGeometry(QtCore.QRect(0, 250, 341, 32))
@@ -95,6 +95,7 @@ class Ui_dlgSettings(object):
         self.cmbResolution.addItem("")
         self.cmbResolution.addItem("")
         self.cmbResolution.addItem("")
+        self.cmbResolution.addItem("")
 
         self.retranslateUi(dlgSettings)
         self.buttonBox.accepted.connect(dlgSettings.accept)
@@ -121,6 +122,8 @@ class Ui_dlgSettings(object):
         self.lblResolution.setText(_translate("dlgSettings", "Resolution:"))
         self.cmbResolution.setCurrentText(_translate("dlgSettings", "1920 x 1080"))
         self.cmbResolution.setItemText(0, _translate("dlgSettings", "1920 x 1080"))
-        self.cmbResolution.setItemText(1, _translate("dlgSettings", "1366 x 768"))
-        self.cmbResolution.setItemText(2, _translate("dlgSettings", "1280 x 720"))
+        self.cmbResolution.setItemText(1, _translate("dlgSettings", "1600 x 900"))
+        self.cmbResolution.setItemText(2, _translate("dlgSettings", "1366 x 768"))
+        self.cmbResolution.setItemText(3, _translate("dlgSettings", "1280 x 720"))
 
+import icons_rc

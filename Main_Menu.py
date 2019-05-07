@@ -13,7 +13,7 @@ class Ui_dlgMain(object):
         dlgMain.setObjectName("dlgMain")
         dlgMain.resize(400, 300)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("GUI/jack_cast_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icons/jack_cast_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         dlgMain.setWindowIcon(icon)
         self.btnStart = QtWidgets.QPushButton(dlgMain)
         self.btnStart.setGeometry(QtCore.QRect(120, 70, 171, 41))
@@ -25,7 +25,7 @@ class Ui_dlgMain(object):
         self.btnExit.setGeometry(QtCore.QRect(120, 210, 171, 41))
         self.btnExit.setObjectName("btnExit")
         self.label = QtWidgets.QLabel(dlgMain)
-        self.label.setGeometry(QtCore.QRect(10, 10, 161, 41))
+        self.label.setGeometry(QtCore.QRect(10, 10, 381, 41))
         font = QtGui.QFont()
         font.setFamily("Franklin Gothic Book")
         font.setPointSize(20)
@@ -45,13 +45,4 @@ class Ui_dlgMain(object):
         self.btnExit.setText(_translate("dlgMain", "Exit"))
         self.label.setText(_translate("dlgMain", "Jack Cast"))
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    dlgMain = QtWidgets.QDialog()
-    ui = Ui_dlgMain()
-    ui.setupUi(dlgMain)
-    dlgMain.show()
-    sys.exit(app.exec_())
-
+import icons_rc

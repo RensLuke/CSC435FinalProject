@@ -14,8 +14,8 @@
    <string>Jack Cast</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>jack_cast_icon.png</normaloff>jack_cast_icon.png</iconset>
+   <iconset resource="icons.qrc">
+    <normaloff>:/icons/jack_cast_icon.png</normaloff>:/icons/jack_cast_icon.png</iconset>
   </property>
   <widget class="QPushButton" name="btnStart">
    <property name="geometry">
@@ -61,7 +61,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>161</width>
+     <width>381</width>
      <height>41</height>
     </rect>
    </property>
@@ -78,6 +78,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>
