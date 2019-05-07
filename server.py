@@ -36,9 +36,9 @@ def start():
         chunk = SS.takescreenshot(width, height)
 
         # Setting up socket
-        clientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)  # Declaring UDP socket
-        clientSock.setsockopt(socket.SOL_IP, socket.IP_MULTICAST_IF, socket.inet_aton(ip_addr))  # Telling kernel to send packets as multicast
-        clientSock.sendto((str(math.ceil((len(chunk) / segment_size))).encode('utf-8')), (UDP_IP_ADDRESS, UDP_PORT_NO))  #  finding/sending how many chunks to send
+        serverSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)  # Declaring UDP socket
+        serverSock.setsockopt(socket.SOL_IP, socket.IP_MULTICAST_IF, socket.inet_aton(ip_addr))  # Telling kernel to send packets as multicast
+        serverSock.sendto((str(math.ceil((len(chunk) / segment_size))).encode('utf-8')), (UDP_IP_ADDRESS, UDP_PORT_NO))  #  finding/sending how many chunks to send
         
         # declaring holder objects for chunking
         holder = segment_size
@@ -46,12 +46,12 @@ def start():
         sent += 1
         for i in range(int(math.ceil((len(chunk)/segment_size)))):  # iterating i many chunks
             if i == 0:
-                clientSock.sendto(chunk[:holder], (UDP_IP_ADDRESS, UDP_PORT_NO))  # sending first chunk
+                serverSock.sendto(chunk[:holder], (UDP_IP_ADDRESS, UDP_PORT_NO))  # sending first chunk
             elif i == int(math.ceil((len(chunk)/segment_size))) - 1:  # sending last chunk
-                clientSock.sendto(chunk[holder:], (UDP_IP_ADDRESS, UDP_PORT_NO))
+                serverSock.sendto(chunk[holder:], (UDP_IP_ADDRESS, UDP_PORT_NO))
                 break
             else:
-                clientSock.sendto(chunk[holder:holder2], (UDP_IP_ADDRESS, UDP_PORT_NO)) # sending all the chunks inbetween
+                serverSock.sendto(chunk[holder:holder2], (UDP_IP_ADDRESS, UDP_PORT_NO)) # sending all the chunks inbetween
                 holder = holder2
                 holder2 = holder2 + segment_size
 
