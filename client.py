@@ -21,6 +21,7 @@ def run_me(pIP, pMulti, pRes, pSaved):
 
 
 def start():
+    # Declaring variables
     global ip_addr, multicast_addr, resolution
     UDP_IP_ADDRESS = multicast_addr
     UDP_PORT_NO = 6789
@@ -28,21 +29,24 @@ def start():
     resolution = resolution.split()
     width = int(resolution[0])
     height = int(resolution[2])
+    
+    # Declaring error checking variables
     OSErrorCount = 0
     CompressionErrorCount = 0
     pygameErrorCount = 0
     successCounter = 0
 
-    serverSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    serverSock.bind(server_address)
-    serverSock.settimeout(5)
-    mreq = struct.pack('4s4s', socket.inet_aton(UDP_IP_ADDRESS), socket.inet_aton(ip_addr))
-    serverSock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
+    # Setting up sockets
+    serverSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # declaring UDP socket
+    serverSock.bind(server_address)  # binding the port number to the port
+    serverSock.settimeout(5)  # setting socket timeout for 5 seconds
+    mreq = struct.pack('4s4s', socket.inet_aton(UDP_IP_ADDRESS), socket.inet_aton(ip_addr))  # declaring struck w/ local IP and Multicast address in it
+    serverSock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)  # setting socket to accept multicast packets from group to local address
     print("Starting on IP:", ip_addr)
     print("Multicast:", multicast_addr)
     print(width, height)
 
-    # Set up Pygame stuff
+    # Pygame setup
     pygame.init()
     pygame.display.set_caption('Jack Cast')
     icon = pygame.image.load('GUI/Icons/jack_cast_icon.png')
@@ -56,36 +60,38 @@ def start():
     while True:
         while watching:
             for event in pygame.event.get():
+                # handle for pygame exit
                 if event.type == pygame.QUIT:
                     watching = False
                     pygame.quit()
                     break
+                 # handle for pygame resize
                 elif event.type == pygame.VIDEORESIZE:
-                    screen = pygame.display.set_mode(event.dict['size'], pygame.RESIZABLE)
-                    width2 = event.dict['size'][0]
-                    height2 = event.dict['size'][1]
+                    screen = pygame.display.set_mode(event.dict['size'], pygame.RESIZABLE)  # adjusting screen size
+                    width2 = event.dict['size'][0]  # grabbing new width
+                    height2 = event.dict['size'][1]  # grabbing new height
             else:
                 try:
-                    data, addr = serverSock.recvfrom(32)
+                    data, addr = serverSock.recvfrom(32)  # receive number of chunks to put together
                     num = data.decode('utf-8')
-                except socket.timeout:
+                except socket.timeout:  # detection for a socket timeout
                     pygame.quit()
                     break
-                except OSError:
+                except OSError:  # detection for if a 64k chunk is read
                     OSErrorCount += 1
                 else:
                     chunk = b''
-                    for j in range(int(num)):
+                    for j in range(int(num)):  # reassembling chunks into screen shot
                         data, addr = serverSock.recvfrom(64000)
                         chunk = chunk + data
-                    try:
+                    try:  # decompressing the screen shot
                         zobj = zlib.decompressobj()
                         pixels = zobj.decompress(chunk)
-                    except zlib.error:
+                    except zlib.error:  # detection if chunks assembled out of order
                         CompressionErrorCount += 1
                     else:
                         # Create the Surface from raw pixels
-                        try:
+                        try:  # Create the Surface from raw pixels
                             img = pygame.image.fromstring(pixels, (width, height), 'RGB')
                         except ValueError:
                             pygameErrorCount += 1
