@@ -37,8 +37,8 @@ def start():
 
     serverSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     serverSock.bind(server_address)
-    group = socket.inet_aton(UDP_IP_ADDRESS)
-    mreq = struct.pack('4s4s', group, socket.inet_aton(ip_addr))
+    serverSock.settimeout(5)
+    mreq = struct.pack('4s4s', socket.inet_aton(UDP_IP_ADDRESS), socket.inet_aton(ip_addr))
     serverSock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
     print("Starting on IP:", ip_addr)
     print("Multicast:", multicast_addr)
@@ -51,48 +51,51 @@ def start():
     screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
     clock = pygame.time.Clock()
     watching = True
+    WIDTH2 = WIDTH
+    HEIGHT2 = HEIGHT
 
     while True:
-            while watching:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        watching = False
-                        break
+        while watching:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    watching = False
+                    pygame.quit()
+                    break
+                elif event.type == pygame.VIDEORESIZE:
+                    screen = pygame.display.set_mode(event.dict['size'], pygame.RESIZABLE)
+                    WIDTH2 = event.dict['size'][0]
+                    HEIGHT2 = event.dict['size'][1]
+            else:
+                try:
+                    data, addr = serverSock.recvfrom(32)
+                    num = data.decode('utf-8')
+                except socket.timeout:
+                    pygame.quit()
+                    break
+                except OSError:
+                    OSErrorCount += 1
                 else:
+                    chunk = b''
+                    for j in range(int(num)):
+                        data, addr = serverSock.recvfrom(64000)
+                        chunk = chunk + data
                     try:
-                        data, addr = serverSock.recvfrom(32)
-                        num = data.decode('utf-8')
-                        print(num)
-                    except OSError:
-                        print('Bad Receive')
-                        OSErrorCount += 1
+                        zobj = zlib.decompressobj()
+                        pixels = zobj.decompress(chunk)
+                    except zlib.error:
+                        CompressionErrorCount += 1
                     else:
-                        chunk = b''
-                        for j in range(int(num)):
-                            data, addr = serverSock.recvfrom(64000)
-                            chunk = chunk + data
+                        # Create the Surface from raw pixels
                         try:
-                            zobj = zlib.decompressobj()
-                            pixels = zobj.decompress(chunk)
-                        except zlib.error:
-                            print("Compression Error")
-                            CompressionErrorCount += 1
+                            img = pygame.image.fromstring(pixels, (WIDTH, HEIGHT), 'RGB')
+                        except ValueError:
+                            pygameErrorCount += 1
                         else:
-                            # Create the Surface from raw pixels
-                            try:
-                                img = pygame.image.fromstring(pixels, (WIDTH, HEIGHT), 'RGB')
-                            except ValueError:
-                                print("pygame error")
-                                pygameErrorCount += 1
-                            else:
-                                # Display the picture
-                                screen.blit(img, (0, 0))
-                                pygame.display.flip()
-                                clock.tick(60)
-                                successCounter += 1
-                                print("Success!")
-            break
-    print("bad receive = ", OSErrorCount)
-    print("compression errors = ", CompressionErrorCount)
-    print("pygame errors = ", pygameErrorCount)
-    print("successes = ", successCounter)
+                            # Display the picture
+                            screen.blit(pygame.transform.smoothscale(img, (WIDTH2, HEIGHT2)), (0, 0))
+                            pygame.display.flip()
+                            clock.tick(60)
+                            successCounter += 1
+        break
+
+
