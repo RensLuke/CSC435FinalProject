@@ -200,7 +200,10 @@
      </font>
     </property>
     <property name="currentText">
-     <string>1920 x 1080</string>
+     <string>1600 x 900   (Recommended)</string>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
     </property>
     <item>
      <property name="text">
@@ -209,7 +212,7 @@
     </item>
     <item>
      <property name="text">
-      <string>1600 x 900</string>
+      <string>1600 x 900   (Recommended)</string>
      </property>
     </item>
     <item>

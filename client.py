@@ -8,7 +8,7 @@ import pygame
 network = helper.NetworkingObj()
 ip_addr = network.get_sfa_ip()
 multicast_addr = '239.1.1.1'
-resolution = '1920 x 1080'
+resolution = '1600 x 900'
 
 
 def run_me(pIP, pMulti, pRes, pSaved):

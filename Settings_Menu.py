@@ -98,6 +98,7 @@ class Ui_dlgSettings(object):
         self.cmbResolution.addItem("")
 
         self.retranslateUi(dlgSettings)
+        self.cmbResolution.setCurrentIndex(1)
         self.buttonBox.accepted.connect(dlgSettings.accept)
         self.buttonBox.rejected.connect(dlgSettings.reject)
         QtCore.QMetaObject.connectSlotsByName(dlgSettings)
@@ -120,9 +121,9 @@ class Ui_dlgSettings(object):
         self.cmbMulticast.setItemText(7, _translate("dlgSettings", "239.1.1.8"))
         self.cmbMulticast.setItemText(8, _translate("dlgSettings", "239.1.1.9"))
         self.lblResolution.setText(_translate("dlgSettings", "Resolution:"))
-        self.cmbResolution.setCurrentText(_translate("dlgSettings", "1920 x 1080"))
+        self.cmbResolution.setCurrentText(_translate("dlgSettings", "1600 x 900   (Recommended)"))
         self.cmbResolution.setItemText(0, _translate("dlgSettings", "1920 x 1080"))
-        self.cmbResolution.setItemText(1, _translate("dlgSettings", "1600 x 900"))
+        self.cmbResolution.setItemText(1, _translate("dlgSettings", "1600 x 900   (Recommended)"))
         self.cmbResolution.setItemText(2, _translate("dlgSettings", "1366 x 768"))
         self.cmbResolution.setItemText(3, _translate("dlgSettings", "1280 x 720"))
 
